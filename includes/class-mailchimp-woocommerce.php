@@ -251,6 +251,12 @@ class MailChimp_WooCommerce
         // Mailchimp oAuth
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_oauth_start', $plugin_admin, 'mailchimp_woocommerce_ajax_oauth_start' );
         $this->loader->add_action( 'wp_ajax_mailchimp_woocommerce_oauth_finish', $plugin_admin, 'mailchimp_woocommerce_ajax_oauth_finish' );
+        
+        // Disable Action Scheduler queue runner
+        if (defined('MAILCHIMP_DISABLE_AS_QUEUE') && MAILCHIMP_DISABLE_AS_QUEUE == true) {
+            // ActionScheduler_QueueRunner::init() is attached to 'init' with priority 1, so we need to run after that
+            $this->loader->add_action( 'init', $plugin_admin, 'mailchimp_as_disable_default_runner', 10 );
+        }
     }
 
 	/**

@@ -127,6 +127,16 @@ class MailChimp_WooCommerce_Admin extends MailChimp_WooCommerce_Options {
             array($this, 'display_plugin_setup_page'), 'data:image/svg+xml;base64,'.$this->mailchimp_svg()
         );
 	}
+	
+	/*
+	 * Disable Action Scheduler's default queue runner, by removing it from the 'action_scheduler_run_queue' hook.
+	 * @since    2.3.1
+	 */
+	function mailchimp_as_disable_default_runner() {
+		if ( class_exists( 'ActionScheduler' ) ) {
+			remove_action( 'action_scheduler_run_queue', array( ActionScheduler::runner(), 'run' ) );
+		}
+	}
 
 	/**
 	 * Setup Feedback Survey Form
