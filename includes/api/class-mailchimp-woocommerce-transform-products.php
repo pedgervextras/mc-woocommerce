@@ -272,7 +272,7 @@ class MailChimp_WooCommerce_Transform_Products
         }
 
         return get_the_post_thumbnail_url($post_id, $image_key);
-    }
+        }
 
     /**
      * @return null|string
